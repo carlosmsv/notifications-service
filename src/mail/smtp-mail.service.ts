@@ -1,6 +1,8 @@
+import { Injectable } from "@nestjs/common";
 import { MailService } from "./mail.service";
 
-export class SMTPMail implements MailService {
+@Injectable()
+export class SMTPMailService implements MailService {
   sendEmail(): string {
     return 'SMTP Mail!'; 
   }
