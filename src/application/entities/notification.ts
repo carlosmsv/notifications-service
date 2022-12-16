@@ -1,6 +1,9 @@
 export interface NotificationProps {
+  recipientId: string;
   content: string;
   category: string;
+  readAt?: Date | null;
+  createdAt: Date;
 }
 
 export class Notification {
@@ -10,22 +13,39 @@ export class Notification {
     this.props = props;
   }
 
-  public set content(content: string) {
-    if(content.length < 5){
-      throw new Error("Notification content is too short");
-    }
+  public set recipientId(recipientId: string) {
+    this.props.recipientId = recipientId;
+  }
 
+  public get recipientId(): string {
+    return this.props.recipientId;
+  }
+
+  public set content(content: string) {
     this.props.content = content;
   }
 
   public get content(): string {
     return this.props.content;
   }
-}
 
-const notification = new Notification({
-  content: "This is a notification",
-  category: "General",
-}
+  public set category(category: string) {
+    this.props.content = category;
+  }
 
-notification.content = "This is a notification";
+  public get category(): string {
+    return this.props.category;
+  }
+
+  public set readAt(readAt: Date | null | undefined) {
+    this.props.readAt = readAt;
+  }
+
+  public get readAt(): Date | null | undefined {
+    return this.props.readAt;
+  }
+
+  public get createdAt(): Date {
+    return this.props.createdAt;
+  }
+}
