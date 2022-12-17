@@ -1,10 +1,12 @@
 import { Notification } from "../entities/notification";
 import { SendNotification } from "./send-notification";
 
+let notifications: Notification[] = [];
+
 
 const notificationsRepository = {
   async create(notification: Notification) {
-    console.log(notification);
+    notifications.push(notification);
   }
 }
 
