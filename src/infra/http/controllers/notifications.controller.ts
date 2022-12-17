@@ -9,6 +9,7 @@ import { ReadNotification } from '@application/use-cases/read-notification';
 import { UnreadNotification } from '@application/use-cases/unread-notification';
 import { CountRecipientNotifications } from '@application/use-cases/count-recipient-notifications';
 import { GetRecipientNotifications } from '@application/use-cases/get-recipient-notifications';
+import { Get } from '@nestjs/common';
 
 @Controller('notifications')
 export class NotificationsController {
@@ -28,9 +29,25 @@ export class NotificationsController {
     }); 
   }
 
-  async countFromRecipient() {}
+  @Get('count/from/:recipientId')
+  async countFromRecipient(@Param('recipientId') recipientId: string) {
+    const { count } = await this.countRecipientNotifications.execute({
+      recipientId,
+    });
 
-  async getFromRecipient() {}
+    return { count };
+  }
+
+  @Get('from/:recipientId')
+  async getFromRecipient(@Param('recipientId') recipientId: string) {
+    const { notifications } = await this.getRecipientNotifications.execute({
+      recipientId,
+    });
+
+    return { 
+      notifications: notifications.map(NotificationViewModel.toHTTP),
+    };
+  }
 
   @Patch(':id/read')
   async read(@Param('id') id: string) {
